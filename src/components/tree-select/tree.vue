@@ -368,7 +368,7 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scope>
 .ats-tree {
   display: inline-block;
   position: relative;

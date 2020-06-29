@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-06-17 16:38:17
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-18 22:21:21
+ * @LastEditTime: 2020-06-25 13:27:16
  */ 
 import fetch from 'utils/fetch'
 // 新增 编辑
@@ -29,7 +29,13 @@ export function toolsList(params) {
     params
   })
 }
-
+export function toolsListss(params) {
+  return fetch({
+    url: 'tools/list',
+    method: 'get',
+    params
+  })
+}
 export function deleteTool(params) {
   return fetch({
     url: '/tools/deleteTool',

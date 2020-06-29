@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-06-16 19:19:15
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-21 22:51:40
+ * @LastEditTime: 2020-06-26 12:26:21
 --> 
 <template>
 	<div class="app-container">
@@ -44,6 +44,8 @@
       <el-table-column align="center" label="操作" min-width="200">
         <template slot-scope="scope">
           <el-button  type="info" size="small" @click="lookCode(scope.row.ip)">查看二维码</el-button>
+          <el-button  type="info" size="small" @click="clickdeviceUser(scope.row.ip)">下发用户</el-button>
+
         </template>
       </el-table-column>
     </el-table>
@@ -62,7 +64,7 @@
 	</div>
 </template>
 <script>
-import {deviceList,deviceQrcode} from 'src/api/device.js'
+import {deviceList,deviceQrcode,deviceUser} from 'src/api/device.js'
  
 
 export default {
@@ -86,6 +88,23 @@ export default {
     this.getList()
   },
   methods: {
+    clickdeviceUser(res){
+      deviceUser({ip:res}).then(res =>{
+        if(res.data.code ===200){
+           this.$message({
+          message: '下发成功',
+          type: 'success'
+        })
+          this.getList()
+        }else{
+          this.$message({
+          message: res.data.message,
+          type: 'error'
+        })
+        }
+      })
+
+    },
      lookCode(ip) {
       this.codeDialogVisible = true
       deviceQrcode({ip: ip}).then(res =>{

@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-05-20 19:56:15
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-18 22:51:50
+ * @LastEditTime: 2020-06-26 23:48:49
 --> 
 <template>
   <div class="app-container">
@@ -41,21 +41,21 @@
         <el-row>
           <el-col :span="12">
             <el-form-item label="工具名称：">
-              <span>{{datalist.toolName}}</span>
+              <span>{{datalist.toolNames}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="工具ID：">
               <span>{{datalist.toolId}}</span>
             </el-form-item>
-          </el-col>
+          </el-col> -->
          </el-row>
          <el-row>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="计量单位：">
               <span>{{datalist.calcType}}</span>
             </el-form-item>
-          </el-col>
+          </el-col> -->
          </el-row>
         <el-row>
           <el-col :span="12">
@@ -67,7 +67,7 @@
           </silentbox-single>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="工具图片：">
           <silentbox-single :src="datalist.toolImg" description="工具图片">
             <span class="card-item" v-if="datalist.toolImg">
@@ -75,9 +75,9 @@
             </span>
           </silentbox-single>
             </el-form-item>
-          </el-col>
+          </el-col> -->
         </el-row>
-        <el-row>
+        <!-- <el-row>
           <el-col :span="12">
             <el-form-item label="持有工器具图片：">
           <silentbox-single :src="datalist.takeImg" description="持有工器具图片">
@@ -87,7 +87,7 @@
           </silentbox-single>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
       </el-form>
     </el-card>
   </div>
@@ -129,6 +129,8 @@ getinfo(){
   getworkLog({id:this.$route.query.id}).then(res =>{
     if(res.data.code === 200&&res.data.success){
       this.datalist = res.data.data
+      this.datalist.userPhoto = 'data:image/jpg;base64,'+this.datalist.userPhoto
+
       this.loading = false
     }else{
       this.$message({

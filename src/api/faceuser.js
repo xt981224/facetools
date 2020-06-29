@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-06-17 16:38:17
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-21 15:16:44
+ * @LastEditTime: 2020-06-26 12:17:55
  */ 
 import fetch from 'utils/fetch'
 // 新增 编辑
@@ -24,7 +24,7 @@ export function UserPage(data) {
 }
 export function updateUser(data) {
   return fetch({
-    url: 'faceUser/POST',
+    url: 'faceUser/update',
     method: 'post',
     data
   })
@@ -46,7 +46,8 @@ export function getimg(params) {
 export function getFaceUser(params) {
   return fetch({
     url: '/faceUser/get',
-	  method: 'get',
+    method: 'get',
+    // responseType: 'blob',
     params
   });
 }

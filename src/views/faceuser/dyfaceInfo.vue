@@ -4,13 +4,13 @@
  * @Author: 邢腾
  * @Date: 2020-05-20 19:56:15
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-21 15:59:29
+ * @LastEditTime: 2020-06-26 22:41:57
 --> 
 <template>
   <div class="app-container" v-loading="listLoadingBox">
       <el-form label-position="right" class="order-info" >
          <el-row>
-           <el-col :span="6" style="text-align:right">
+           <el-col :span="2" style="text-align:right;margin-right: 30px;">
                 <img width="100px" :src="img" />
            </el-col>
           <div style="max-height:100px">
@@ -60,7 +60,7 @@ export default {
   },
   created() {
   this.getinfo()
-  this.getimgft()
+  // this.getimgft()
   },
   filters:{
     timeFilter(val) {
@@ -77,9 +77,9 @@ export default {
   },
   methods: {
     // axios.get('qrcode')
-    getimgft(){
+    getimgft(res){
       this.listLoadingBox = true
-       axios.get(process.env.BASE_API+'/qrcode?'+'cardId='+this.$route.query.id, {
+       axios.get('/qrcode?'+'cardId='+res, {
         responseType: 'blob'
       }).then((res) => {
         this.img = window.URL.createObjectURL(res.data);
@@ -99,7 +99,8 @@ getinfo(){
   getFaceUser({id:this.$route.query.id}).then(res =>{
     if(res.data.code === 200&&res.data.success){
       this.datalist = res.data.data
-      this.loading = false
+      // this.loading = false
+      this.getimgft(this.datalist.cardId)
     }else{
       this.$message({
           message: '系统错误',

@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-06-16 19:19:15
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-21 13:17:31
+ * @LastEditTime: 2020-06-27 09:30:48
 --> 
 <template>
 	<div class='app-container'>
@@ -38,6 +38,7 @@
       highlight-current-row
       style="width: 100%;"
     >
+    <el-table-column align="center" prop="id" label="ID"  />
       <el-table-column align="center" prop="userName" label="姓名"  />
       <el-table-column align="center" prop="userMobile" label="电话" min-width="120px" />
       <el-table-column align="center" prop="userIdCard" label="身份证号" min-width="180px" />
@@ -53,18 +54,18 @@
             <el-table-column align="center" prop="checkOutTime" label="撤销时间" min-width="150"  >
             <template slot-scope="scope">
                   <span >
-                    {{moment(scope.row.checkOutTime).format('YYYY-MM-DD hh:mm')}}
+                    {{scope.row.checkOutTime===undefined?'':moment(scope.row.checkOutTime).format('YYYY-MM-DD hh:mm')}}
                   </span>
                 </template>
               </el-table-column>
              <el-table-column align="center" prop="toolNames" label="工具" min-width="180px" >
               <template slot-scope="scope">
-                  <span >
-                    <pre>{{scope.row.toolNames}}</pre>
-                  </span>
+                  <p v-for="(item,index) in scope.row.toolNames" :key="index">
+                    {{item}}
+                  </p>
                 </template>
               </el-table-column>
-      <el-table-column align="center" prop="state" label="登记状态"  />
+      <el-table-column align="center" prop="state" min-width="100px" label="登记状态"  />
 
 
       <el-table-column align="center" label="操作" min-width="200px">
@@ -75,23 +76,19 @@
             size="small"
             @click.native="handleDel(scope.row.id)"
             >删除</el-button> -->
-             <router-link
+             <!-- <router-link
               v-handle="'orders:info'"
                 :to="{ path: 'workloginfo', query: { id: scope.row.id } }"
               >
+              :disabled="!(scope.row.state==='未撤销')"
                 <el-button type="info" size="small">查看</el-button>
-              </router-link>
+              </router-link> -->
+               
                  <router-link
               v-handle="'orders:info'"
-                :to="{ path: 'workloginfo', query: { id: scope.row.id } }"
+                :to="{ path: 'retriveworklog', query: { id: scope.row.id } }"
               >
-                <el-button type="info" size="small">编辑</el-button>
-              </router-link>
-                 <router-link
-              v-handle="'orders:info'"
-                :to="{ path: 'workloginfo', query: { id: scope.row.id } }"
-              >
-                <el-button type="info" size="small">撤销</el-button>
+                <el-button  type="info" size="small">{{scope.row.state==='已撤销'?'查看':'撤销'}}</el-button>
               </router-link>
               
         </template>
@@ -100,12 +97,7 @@
     <div class="pagination-container">
       <el-pagination v-show="!listLoading" :page-size="listQuery.size" :page-sizes="[10,20,30]" :current-page.sync="listQuery.current" :total="total" @size-change="handleSizeUpdate" @current-change="handleCurrentUpdate" layout="total,sizes,prev,pager,next,jumper"></el-pagination>
     </div>
-    <router-link
-              v-handle="'orders:info'"
-                :to="{ path: '/ydjrdj' }"
-              >
-                <el-button type="info" size="small">移动端</el-button>
-              </router-link>
+    
 	</div>
 </template>
 <script>
@@ -177,6 +169,11 @@ export default {
         this.$message.error(res.data.message,2)
         }else{
           this.clientList = res.data.data.records
+          this.clientList.forEach(element => {
+            element.toolNames = element.toolNames.split(',')
+          console.log(element.toolNames)
+
+          });
           this.total = res.data.data.total;
             this.pages = res.data.data.pages;
             this.listQuery.current = res.data.data.current;

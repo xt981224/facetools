@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-06-21 22:03:38
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-21 22:15:39
+ * @LastEditTime: 2020-06-26 12:24:00
  */ 
 import fetch from 'utils/fetch'
 export function deviceList (params) {
@@ -19,6 +19,15 @@ export function deviceQrcode (params) {
     url: '/deviceQrcode',
     method: 'get',
     responseType: 'blob',
+    params
+  })
+}
+
+export function deviceUser (params) {
+  return fetch({
+    url: '/deviceUser',
+    method: 'get',
+   
     params
   })
 }

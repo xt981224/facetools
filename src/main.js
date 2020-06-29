@@ -48,63 +48,71 @@ function hasPermission(codes, permissioncodes) {
 
 // register global progress
 const whiteList = ["/login"];
+
 router.beforeEach((to, from, next) => {
+  // alert(to.path)
   NProgress.start();
-  if (getToken()) {
-    if (to.path === "/login") {
-      next({
-        path: "/",
-      });
-    } else {
-      if (store.getters.codes.length === 0) {
-        store
-          .dispatch("GetInfo")
-          .then((res) => {
-            const codes = res.data.permCodes;
-            // button control
-            Vue.directive("handle", {
-              bind: (el, binding) => {
-                // console.log(vnode)
-                if (codes.indexOf(binding.value) < 0) {
-                  el.style.display = "none";
-                }
+  if(to.path ==='/addWorkLogH5'){
+     next();
+ }else {
+    if (getToken()) {
+      if (to.path === "/login") {
+        next({
+          path: "/",
+        });
+      } else {
+        if (store.getters.codes.length === 0) {
+          store
+            .dispatch("GetInfo")
+            .then((res) => {
+              const codes = res.data.permCodes;
+              // button control
+              Vue.directive("handle", {
+                bind: (el, binding) => {
+                  // console.log(vnode)
+                  if (codes.indexOf(binding.value) < 0) {
+                    el.style.display = "none";
+
+                  }
+                },
+              });
+              store
+                .dispatch("GenerateRoutes", {
+                  codes,
+                })
+                .then(() => {
+                    router.addRoutes(store.getters.addRouters);
+                    next({...to});
+                 
+                });
+            })
+            .catch(() => {
+              store.dispatch("FedLogOut").then(() => {
+                next({
+                  path: "/login",
+                });
+              });
+            });
+        } else {
+          if (hasPermission(store.getters.codes, to.meta.role)) {
+            next();
+          } else {
+            next({
+              path: "/401",
+              query: {
+                noGoBack: true,
               },
             });
-            store
-              .dispatch("GenerateRoutes", {
-                codes,
-              })
-              .then(() => {
-                router.addRoutes(store.getters.addRouters);
-                next({ ...to });
-              });
-          })
-          .catch(() => {
-            store.dispatch("FedLogOut").then(() => {
-              next({
-                path: "/login",
-              });
-            });
-          });
-      } else {
-        if (hasPermission(store.getters.codes, to.meta.role)) {
-          next();
-        } else {
-          next({
-            path: "/401",
-            query: {
-              noGoBack: true,
-            },
-          });
+          }
         }
       }
-    }
-  } else {
-    if (whiteList.indexOf(to.path) !== -1) {
-      next();
     } else {
-      NProgress.done();
-      next("/login");
+      if (whiteList.indexOf(to.path) !== -1) {
+        next();
+      } else {
+        NProgress.done();
+        next("/login");
+      }
     }
   }
 });

@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-06-16 19:19:15
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-21 14:14:04
+ * @LastEditTime: 2020-06-26 11:38:13
 --> 
 <template>
 	<div class="app-container">
@@ -40,19 +40,19 @@
       >
             <!-- <el-table-column align="center" prop="id" label="ID"  /> -->
             <el-table-column align="center" prop="realname" label="姓名"  />
-            <el-table-column align="center" prop="cardId" label="身份证号"  />
+            <el-table-column align="center" prop="cardId"  min-width="180px" label="身份证号"  />
             <el-table-column align="center" prop="gender" label="性别"  />
-            <el-table-column align="center" prop="nation" label="民族"  />
-            <el-table-column align="center" prop="cardType" label="证件类型"  />
+            <!-- <el-table-column align="center" prop="nation" label="民族"  /> -->
+            <el-table-column align="center" prop="cardType" min-width="120px" label="证件类型"  />
             <el-table-column align="center" prop="birthday" min-width="150px" label="出生日期"  />
-            <el-table-column align="center" prop="authStartTime" label="授权日期开始" min-width="130"  >
+            <el-table-column align="center" prop="authStartTime" label="授权日期开始" min-width="150"  >
                <template slot-scope="scope">
                   <span >
                     {{moment(scope.row.authStartTime).format('YYYY-MM-DD hh:mm')}}
                   </span>
                 </template>
               </el-table-column> 
-            <el-table-column align="center" prop="authEndTime" label="授权截止日期" min-width="130"  >
+            <el-table-column align="center" prop="authEndTime" label="授权截止日期" min-width="150"  >
             <template slot-scope="scope">
                   <span >
                     {{moment(scope.row.authEndTime).format('YYYY-MM-DD hh:mm')}}
@@ -71,7 +71,7 @@
         </template>
       </el-table-column> -->
    
-      <el-table-column align="center" label="操作" min-width="200">
+      <el-table-column align="center" label="操作" min-width="250">
         <template slot-scope="scope">
           <el-button
             v-handle="'brands:delete'"
@@ -97,13 +97,8 @@
               v-handle="'orders:info'"
                 :to="{ path: '/dyfaceinfo', query: { id: scope.row.id } }"
               >
-              <!-- <a href=‘/dyfaceinfo${scope.row.id}‘ target="view_window"> -->
-                <!-- <el-button type="info" size="small">打印</el-button> -->
-                <el-button type="info" @click="clll(scope.row.id)" size="small">打印</el-button>
-<!-- </a> -->
+                <el-button type="info" size="small">打印</el-button>
               </router-link>
-
-              <!-- </router-link> -->
         </template>
       </el-table-column>
     </el-table>
@@ -134,11 +129,6 @@ export default {
     this.getList()
   },
   methods: {
-    clll(res){
-      // 
-      // window.open('https://javascript.info/','height=210,   width=500,   top=100,   left=10,')
-    window.open('/dyfaceinfo'+'?id='+res,'hahah',   'height=140px,   width=300px,   top=100px,   left=10px,location=no,toolbar=no,menubar=yes,scrollbars=yes,resizable=yes,status=no');
-    },
 handleSizeUpdate(val) {
       this.listQuery.size = val
       this.getList()

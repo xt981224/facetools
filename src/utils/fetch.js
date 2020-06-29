@@ -1,3 +1,11 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: 邢腾
+ * @Date: 2020-06-12 12:46:36
+ * @LastEditors: xingteng
+ * @LastEditTime: 2020-06-26 22:11:28
+ */ 
 import axios from 'axios'
 import {
   Message
@@ -7,7 +15,7 @@ import store from '../store'
 // create axios
 const service = axios.create({
   baseURL: process.env.BASE_API,
-  timeout: 5000
+  timeout: 15000
 })
 
 // request block

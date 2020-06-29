@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-05-20 19:56:15
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-21 15:34:50
+ * @LastEditTime: 2020-06-26 12:16:56
 --> 
 <template>
   <div class="app-container"  v-loading="loading">
@@ -55,8 +55,8 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
         this.loading = true
-        updateUser().then(res =>{
-          if(res.code===200){
+        updateUser({authEndTime:this.createVehicleForm.authEndTime,id:this.$route.query.id}).then(res =>{
+          if(res.data.code===200){
             this.loading = false
             this.$message.success("成功",2)
             this.$router.push({path:'/faceuser/list'})

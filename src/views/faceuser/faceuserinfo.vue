@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-05-20 19:56:15
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-21 09:44:11
+ * @LastEditTime: 2020-06-27 11:54:13
 --> 
 <template>
   <div class="app-container">
@@ -32,37 +32,38 @@
               <span>{{datalist.gender}}</span>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
+          <!-- <el-col :span="12">
             <el-form-item label="名族：">
               <span>{{datalist.nation}}</span>
             </el-form-item>
-          </el-col>
-        </el-row>
-         <el-row>
+          </el-col> -->
           <el-col :span="12">
             <el-form-item label="证件类型：">
               <span>{{datalist.cardType}}</span>
             </el-form-item>
           </el-col>
+        </el-row>
+         <el-row>
+          
           <el-col :span="12">
             <el-form-item label="出生年月：">
               <span>{{datalist.birthday}}</span>
             </el-form-item>
           </el-col>
+           <el-col :span="12">
+            <el-form-item label="证件地址：">
+              <span>{{datalist.identityAddress}}</span>
+            </el-form-item>
+          </el-col>
          </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="证件照片：">
-          <silentbox-single :src="datalist.cardFace" description="证件照片">
-            <span class="card-item" v-if="datalist.cardFace">
-              <img :src="datalist.cardFace">
+            <el-form-item label="抓拍照片：">
+          <silentbox-single :src="'data:image/jpg;base64,'+datalist.checkFace" description="证件照片">
+            <span class="card-items" v-if="datalist.checkFace">
+              <img :src="'data:image/jpg;base64,'+datalist.checkFace" style="width:40%">
             </span>
           </silentbox-single>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="证件地址：">
-              <span>{{datalist.identityAddress}}</span>
             </el-form-item>
           </el-col>
         </el-row>
@@ -107,6 +108,8 @@ getinfo(){
   getFaceUser({id:this.$route.query.id}).then(res =>{
     if(res.data.code === 200&&res.data.success){
       this.datalist = res.data.data
+      this.datalist.cardFace = 'data:image/jpg;base64,'+this.datalist.cardFace
+
       this.loading = false
     }else{
       this.$message({
@@ -158,7 +161,6 @@ getinfo(){
       width: 200px;
       height: 118px;
       overflow: hidden;
-      border: 1px solid #d1dbe5;
       img {
         width: 100%;
         vertical-align: middle;
@@ -170,14 +172,14 @@ getinfo(){
     }
   }
 }
-.card-item {
+.card-items {
       display: inline-block;
       width: 50%;
-      height: 200px;
+      // height: 200px;
       overflow: hidden;
-      border: 1px solid #d1dbe5;
+      // border: 1px solid #d1dbe5;
       img {
-        width: 100%;
+        // width: 40%;
       }
     }
 </style>

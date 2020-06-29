@@ -112,10 +112,14 @@ import toolsinfo from 'views/gqjgl/ToolInfo';
 // import ryadd from 'views/rygl/ryadd';
 import ryadd from 'views/rygl/ryadd2';
 
-import ryaddh5 from 'views/rygl/ryaddH5';
+import addWorkLogH5 from 'views/rygl/addWorkLogH5';
 
 import workLogPage from 'views/rygl/workLogPage';
 import workloginfo from 'views/rygl/workloginfo';
+import retriveworklog from 'views/rygl/retriveworklog';
+
+import deviceentry from 'views/rygl/deviceentry';
+
 
 // 人员管理
 
@@ -137,6 +141,11 @@ import Err403 from 'views/error/403';
 // import ErrLog from 'views/errlog'
 
 export const constantRouterMap = [
+  {
+    path: '/addWorkLogH5/:id*',
+    component: addWorkLogH5,
+    hidden: true,
+  },
   {
     path: '/login',
     component: Login,
@@ -369,45 +378,10 @@ export const asyncRouterMap = [
       },
     ]
   },
-  // {
-  //   path: "ydjrdj",
-  //   component: ryadd,
-  //   name: "进入登记",
-  //   meta: {
-  //     codes: ["delivery:deliveryList"],
-  //   },
-  // },
-  // {
-  //   path: "/rygl",
-  //   component: Layout,
-  //   redirect: "/rygl/index",
-  //   name: "出入登记管理",
-  //   icon: "jiesuan",
-  //   meta: {
-  //     codes: ["delivery:deliveryList"],
-  //   },
-  // },
-  {
-    path: '/ydjrdj',
-    component: ryaddh5,
-    name: '订单详情',
-    hidden: true,
-    meta: {
-      codes: ["delivery:deliveryList"],
-    }
-  },
-  // {
-  //   path: "index/:id*",
-  //   component: ryadd,
-  //   name: "进入登记",
-  //   meta: {
-  //     codes: ["delivery:deliveryList"],
-  //   },
-  // },
   {
     path: "/rygl",
     component: Layout,
-    redirect: "/rygl/index",
+    redirect: "/rygl/list",
     name: "出入登记管理",
     icon: "jiesuan",
     meta: {
@@ -418,6 +392,15 @@ export const asyncRouterMap = [
         path: "index/:id*",
         component: ryadd,
         name: "进入登记",
+        hidden: true,
+        meta: {
+          codes: ["delivery:deliveryList"],
+        },
+      },
+      {
+        path: "deviceentry/list",
+        component: deviceentry,
+        name: "刷卡记录",
         meta: {
           codes: ["delivery:deliveryList"],
         },
@@ -434,6 +417,15 @@ export const asyncRouterMap = [
         path: "workloginfo/:id*",
         component: workloginfo,
         name: "人员详情",
+        hidden: true,
+        meta: {
+          codes: ["delivery:deliveryList"],
+        },
+      },
+      {
+        path: "retriveworklog/:id*",
+        component: retriveworklog,
+        name: "撤销人员",
         hidden: true,
         meta: {
           codes: ["delivery:deliveryList"],
