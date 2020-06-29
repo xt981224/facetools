@@ -4,7 +4,7 @@
  * @Author: 邢腾
  * @Date: 2020-06-12 12:59:46
  * @LastEditors: xingteng
- * @LastEditTime: 2020-06-17 19:43:42
+ * @LastEditTime: 2020-06-29 17:06:34
  */ 
 // see http://vuejs-templates.github.io/webpack for documentation.
 let path = require("path");
@@ -38,14 +38,14 @@ module.exports = {
     assetsPublicPath: "/",
     proxyTable: {
       "/api": {
-        target: "http://47.103.124.63:9710/",
+        target: "",
         changeOrigin: true,
         pathRewrite: {
           "^/api": "",
         },
       },
       "/file": {
-        target: "http://47.103.124.63:9710/upload/uploadSingle?trace=true&projectName=ysd&needCompass=false&needWaterMark=false&projectKeyCode=dpgZSFzDRy8mcJBb&specialName=C-GUR618&onCloud=false",
+        target: "",
         changeOrigin: true,
         pathRewrite: {
           "^/file": "/file",
